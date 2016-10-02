@@ -5,8 +5,10 @@ kivy.require('1.9.0')
 
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.button import Button
 from kivy.properties import BoundedNumericProperty
+from kivy.properties import StringProperty
 from random import randint
 
 
@@ -19,7 +21,8 @@ class Card(Button):
     s = BoundedNumericProperty(0, min=0, max=3)
     f = BoundedNumericProperty(0, min=0, max=3)
     n = BoundedNumericProperty(0, min=0, max=3)
-
+    code = StringProperty()
+    
     def __init__(self, ic, jc, card_code):
         super(Card, self).__init__()
         self.i = ic
@@ -33,6 +36,15 @@ class Card(Button):
     def build(self):
         return self
 
+class PositionOnTable(RelativeLayout):
+    
+    def __init__(self, ic, jc, card_code):
+        super(PositionOnTable, self).__init__()
+        self.add_widget(Card(ic,jc,card_code))
+
+    def build(self):
+        return self
+
 class Table(GridLayout):
     pass
 
@@ -42,7 +54,7 @@ class SetApp(App):
         for j in range(0,3):
             for i in range(0,4):
                 code = str(randint(0,2))+str(randint(0,2))+str(randint(0,2))+str(randint(0,2))
-                table.add_widget(Card(i,j,code))
+                table.add_widget(PositionOnTable(i,j,code))
         return table
 
 if __name__=="__main__":

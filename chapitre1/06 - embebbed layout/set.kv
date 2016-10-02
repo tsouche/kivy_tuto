@@ -2,11 +2,23 @@
 #:kivy 1.9.0
 
 <Card>:
-    text: "i=" + str(self.i) + " - j=" + str(self.j) +"\n" + str(self.c) + str(self.s) + str(self.f) + str(self.n)
+    text: "i=" + str(self.i) + " - j=" + str(self.j) +"\n" + str(self.c) + str(self.s) + str(self.f) + str(self.n) + "\n" + self.code
 
+    size_hint_x: None
+    width: 100
+    size_hint_y: None
+    height: 150
+    
+<PositionOnTable>:
 
 <Table>:
     rows: 3
     cols: 4
     spacing: 10
-    padding: 10
+    padding: 7
+    canvas:
+        Color:
+            rgba: 0, 0.4, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
