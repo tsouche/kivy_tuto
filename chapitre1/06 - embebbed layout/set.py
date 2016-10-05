@@ -22,8 +22,12 @@ class Card(Button):
     f = BoundedNumericProperty(0, min=0, max=3)
     n = BoundedNumericProperty(0, min=0, max=3)
     code = StringProperty()
+    filename = StringProperty()
+    
+    
     
     def __init__(self, ic, jc, card_code):
+        filepath = "/data/code/setgame/client/images/"
         super(Card, self).__init__()
         self.i = ic
         self.j = jc
@@ -32,7 +36,9 @@ class Card(Button):
         self.s = int(card_code[1])
         self.f = int(card_code[2])
         self.n = int(card_code[3])
-            
+        self.filename = filepath + self.code + ".png"
+        print("BOGUS00: ", self.filename)
+        
     def build(self):
         return self
 
