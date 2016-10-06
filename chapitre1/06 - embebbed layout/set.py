@@ -27,7 +27,8 @@ class Card(Button):
     
     
     def __init__(self, ic, jc, card_code):
-        filepath = "/data/code/setgame/client/images/"
+        # filepath = "/data/code/setgame/client/images/"
+        filepath = "./../../../setgame/client/images/"
         super(Card, self).__init__()
         self.i = ic
         self.j = jc
@@ -37,7 +38,7 @@ class Card(Button):
         self.f = int(card_code[2])
         self.n = int(card_code[3])
         self.filename = filepath + self.code + ".png"
-        print("BOGUS00: ", self.filename)
+        #print("BOGUS00: ", self.filename)
         
     def build(self):
         return self
