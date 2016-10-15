@@ -1,41 +1,21 @@
-# File name: layouts2.py
-import kivy
-from gi.overrides.Gdk import Color
-kivy.require('1.9.0')
+'''
+Created on Oct 15, 2016
 
-from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
+@author: thierry
+'''
+
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.button import Button
 from kivy.properties import NumericProperty, BoundedNumericProperty
 from kivy.properties import StringProperty, BooleanProperty
-from random import randint
 
 
-constant_unit = 10
-constant_card_height = 15 * constant_unit
-constant_card_width  = 10 * constant_unit
-constant_nb_cols = 4
-constant_nb_rows = 3
-constant_color_background = (0.0, 0.4, 0.0, 1.0)    # rgba
-constant_color_highlight  = (1.0, 0.2, 0.2, 0.6)    # rgba
-constant_color_card       = (1.0, 1.0, 1.0, 1.0)    # rgba
-constant_color_card_back  = (0.0, 0.2, 0.0, 1.0)    # rgba
-constant_color_blue       = (0.0, 0.0, 0.8, 1.0)    # rgba
-constant_color_blue_half  = (0.0, 0.0, 0.8, 0.3)    # rgba
-constant_color_red        = (0.8, 0.0, 0.0, 1.0)    # rgba
-constant_color_red_half   = (0.8, 0.0, 0.0, 0.3)    # rgba
-constant_color_green      = (0.0, 0.8, 0.0, 1.0)    # rgba
-constant_color_green_half = (0.0, 0.8, 0.0, 0.3)    # rgba
-constant_spacing = constant_unit
-constant_padding = constant_unit
-constant_table_width  =  constant_card_width *  constant_nb_cols      \
-                      +     constant_spacing * (constant_nb_cols - 1) \
-                      +     constant_padding * 2
-constant_table_height = constant_card_height *  constant_nb_rows      \
-                      +     constant_spacing * (constant_nb_rows - 1) \
-                      +     constant_padding * 2
+from constant import constant_unit, constant_card_height, constant_card_width
 
+from constant import constant_color_background, constant_color_highlight
+from constant import constant_color_card, constant_color_card_back
+from constant import constant_color_blue, constant_color_blue_half
+from constant import constant_color_red, constant_color_red_half
+from constant import constant_color_green, constant_color_green_half
 
             
 class Card(RelativeLayout):
@@ -202,33 +182,3 @@ class Card(RelativeLayout):
     def build(self):
         return self
 
-
-class Table(GridLayout):
-    
-    def index(self, i, j):
-        return i + j*constant_nb_cols
-    
-    def __init__(self):
-        super(Table, self).__init__()
-        # self.size = (constant_table_width, constant_table_height)
-        # self.cols = constant_nb_cols
-        # self.rows = constant_nb_rows
-        # self.col_default_width  = constant_card_width
-        # self.row_default_height = constant_card_height
-        self.positions = []
-        for j in range(0,constant_nb_rows):
-            for i in range(0,constant_nb_cols):
-                code = str(randint(0,2))+str(randint(0,2))+str(randint(0,2))+str(randint(0,2))
-                self.positions.append(CardOnTable(i,j,code))
-        for j in range(0,constant_nb_rows):
-            for i in range(0,constant_nb_cols):
-                self.add_widget(self.positions[self.index(i,j)])
-
-
-class SetApp(App):
-    def build(self):
-        table = Table()
-        return table
-
-if __name__=="__main__":
-    SetApp().run()
