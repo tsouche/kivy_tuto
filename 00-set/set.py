@@ -36,12 +36,11 @@ class Card(Button):
     n = BoundedNumericProperty(0, min=0, max=3)
     code = StringProperty()
     filename = StringProperty()
-    
-    
+    selected = False
     
     def __init__(self, ic, jc, card_code):
         # filepath = "/data/code/setgame/client/images/"
-        filepath = "./../../../setgame/client/images/"
+        filepath = "./../../setgame/client/images/"
         super(Card, self).__init__()
         self.card_width  = constant_card_width
         self.card_height = constant_card_height
@@ -53,15 +52,18 @@ class Card(Button):
         self.f = int(card_code[2])
         self.n = int(card_code[3])
         self.filename = filepath + self.code + ".png"
-        print("BOGUS00: i=", ic, "- j=", jc, ":", self.filename)
+        # print("BOGUS00: i=", ic, "- j=", jc, ":", self.filename)
         
+    def select(self):
+        self.selected = (self.selected == False)
+
     def build(self):
         return self
 
-class PositionOnTable(RelativeLayout):
+class CardOnTable(RelativeLayout):
     
     def __init__(self, ic, jc, card_code):
-        super(PositionOnTable, self).__init__()
+        super(CardOnTable, self).__init__()
         self.add_widget(Card(ic,jc,card_code))
 
     def build(self):
@@ -74,28 +76,20 @@ class Table(GridLayout):
     
     def __init__(self):
         super(Table, self).__init__()
-        self.size = (constant_table_width, constant_table_height)
-        self.cols = constant_nb_cols
-        self.rows = constant_nb_rows
-        self.col_default_width  = constant_card_width
-        self.row_default_height = constant_card_height
+        # self.size = (constant_table_width, constant_table_height)
+        # self.cols = constant_nb_cols
+        # self.rows = constant_nb_rows
+        # self.col_default_width  = constant_card_width
+        # self.row_default_height = constant_card_height
         self.positions = []
         for j in range(0,constant_nb_rows):
             for i in range(0,constant_nb_cols):
                 code = str(randint(0,2))+str(randint(0,2))+str(randint(0,2))+str(randint(0,2))
-                self.positions.append(PositionOnTable(i,j,code))
+                self.positions.append(CardOnTable(i,j,code))
         for j in range(0,constant_nb_rows):
             for i in range(0,constant_nb_cols):
                 self.add_widget(self.positions[self.index(i,j)])
 
-    def setCardCode(self, i,j, code):
-        """
-        This method resets the card code of a card on the table.
-        If code == -1: the position (i,j) is empty.
-        """
-        """ pure test code for teh moment"""
-        pass
-        
 
 class SetApp(App):
     def build(self):
