@@ -83,7 +83,23 @@ class Card(RelativeLayout):
                 self.canvas.add(Color(color))
                 self.canvas.add(Quad((x,y+h/2,x+w/2,y+h,x+w,y+h/2,x+w/2,y)))
     
-    def __init__(self, ic, jc, card_code):
+    def set_position(self, x, y):
+        """
+        This method enable to override the existing position. 
+        """
+        self.pos_hint = None, None
+        self.pos = self.to_parent(x,y)
+    
+    def resize(self, w,h):
+        """
+        This method allows to resize the card in case it is not well displayed.
+        """
+        self.size_hint_x = None
+        self.size_hint_y = None
+        self.width = w
+        self.height = h
+        
+    def __init__(self, ic, jc, card_code, x, y, w, h):
         # filepath = "/data/code/setgame/client/images/"
         filepath = "./../../setgame/client/images/"
         super(Card, self).__init__()
@@ -97,23 +113,8 @@ class Card(RelativeLayout):
         self.filename = filepath + self.code + ".png"
         self.visible = False
         self.selected = False
-        
-    def set_position(self, x, y):
-        """
-        This method enable to override the existing position. 
-        """
-        self.pos_hint = None, None
-        self.x = x
-        self.y = y
-    
-    def resize(self, w,h):
-        """
-        This method allows to resize the card in case it is not well displayed.
-        """
-        self.size_hint_x = None
-        self.size_hint_y = None
-        self.width = w
-        self.height = h
+        self.set_position(x, y)
+        self.resize(w, h)
         
     def show(self):
         """
@@ -178,6 +179,9 @@ class Card(RelativeLayout):
             # the card is not visible: we display the card back
             self.canvas.add(Color(constant_color_card_back))
             self.canvas.add(Line(rounder_rectangle=(0,0,10*self.unit, 15*self.unit,self.unit)))
+        # and draw !
+        super(Card, self).draw()
+
             
     def build(self):
         return self
